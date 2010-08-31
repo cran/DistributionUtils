@@ -1,11 +1,24 @@
+################################################
+### Functions
+################################################
 export(besselRatio)
+export(incompleteBesselK)
+export(incompleteBesselKR)
 export(distIneqMassart)
 export(integrateDens)
-export(inversionTestpq,inversionTestqp)
+export(inversionTestpq, inversionTestqp)
 export(is.wholenumber)
 export(logHist)
 export(momChangeAbout)
 export(momIntegrated)
 export(momSE)
 export(safeIntegrate)
-export(skewness,kurtosis)
+export(skewness, kurtosis)
+export(tailPlot, tailPlotLine)
+export(normTailPlotLine, tTailPlotLine, gammaTailPlotLine)
+export(tsHessian)
+
+################################################
+### useDynLib
+################################################
+useDynLib("DistributionUtils")
