@@ -3,27 +3,30 @@
 
 \title{Moments Using Integration}
 \description{
-  Calculates moments and absolute moments about a given location for the
-  generalized hyperbolic and related distributions.
+  Calculates moments and absolute moments about a given location for any
+  given distributions.
 }
 \usage{
-momIntegrated(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
-              order, param = NULL, about = 0, absolute = FALSE)
+momIntegrated(densFn = "ghyp", param = NULL, order, about = 0,
+              absolute = FALSE, ...)
 }
 
 \arguments{
   \item{densFn}{Character. The name of the density function whose
     moments are to be calculated. See \bold{Details}.}
-  \item{order}{Numeric. The order of the moment or absolute moment to be
-    calculated.}
   \item{param}{Numeric. A vector giving the parameter values for the
     distribution specified by \code{densFn}. If no \code{param} values
-  are specified, then the default parameter values of each distribution
-  are used instead.}
+    are specified, then the default parameter values of each
+    distribution are used instead.}  
+  \item{order}{Numeric. The order of the moment or absolute moment to be
+    calculated.}
   \item{about}{Numeric. The point about which the moment is to be calculated.}
   \item{absolute}{Logical. Whether absolute moments or ordinary moments
     are to be calculated. Default is \code{FALSE}.}
+  \item{\dots}{Passes arguments to \code{\link{integrate}}. In
+    particular, the parameters of the distribution.}
 }
+
 \details{
   Denote the density function by \eqn{f}{f}. Then if
   \code{order}\eqn{=k}{=k} and \code{about}\eqn{=a}{=a},
@@ -35,22 +38,12 @@ momIntegrated(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
     integral_{-infinity}^infinity |x - a|^k f(x) dx}
   when \code{absolute = TRUE}.
 
-  Only certain density functions are permitted.
+  The name of the density function must be supplied as the characters of
+  the root for that density (e.g. \code{norm}, \code{ghyp}).
 
-  When \code{densFn="ghyp"} or \code{"generalized hyperbolic"} the
-  density used is \code{dghyp}. The default value for \code{param} is
-  \code{c(0, 1, 1, 0, 1)}.
-
-  When \code{densFn="hyperb"} or \code{"hyperbolic"} the density used is
-  \code{dhyperb}. The default value for \code{param} is
-  \code{c(0, 1, 1, 0)}.
-
-  When \code{densFn="gig"} or \code{"generalized inverse gaussian"} the
-  density used is \code{dgig}. The default value for \code{param} is
-  \code{c(1, 1, 1)}.
-
-  When \code{densFn="gamma"} the density used is \code{dgamma}. The
-  default value for \code{param} is \code{c(1, 1)}.
+  When \code{densFn="ghyp"},  \code{densFn="hyperb"},
+  \code{densFn="gig"} or \code{densFn = "vg"}, the relevant package must
+  be loaded or an error will result.
 
   When \code{densFn="invgamma"} or \code{"inverse gamma"} the
   density used is the density of the inverse gamma distribution given by
@@ -64,10 +57,6 @@ momIntegrated(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
   \code{rate}\eqn{=1/\theta}{=1/theta}. The default value for
   \code{param} is \code{c(-1, 1)}.
 
-  When \code{densFn = "vg"} or \code{"variance gamma"} the density used is
-  \code{dvg} from the package \pkg{VarianceGamma}. In this case, the package
-  \pkg{VarianceGamma} must be loaded or an error will result. The
-  default value for \code{param} is \code{c(0, 1, 0, 1)}.
 
 }
 \value{
@@ -75,9 +64,11 @@ momIntegrated(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
 }
 
 \author{David Scott \email{d.scott@auckland.ac.nz},
-        Christine Yang Dong \email{c.dong@auckland.ac.nz}}
+  Christine Yang Dong \email{c.dong@auckland.ac.nz},
+  Xinxing Li \email{xli053@aucklanduni.ac.nz}}
+
 \seealso{
-	
+
   \code{\link[GeneralizedHyperbolic]{dghyp}},
   \code{\link[GeneralizedHyperbolic]{dhyperb}}, \code{\link{dgamma}},
   \code{\link[GeneralizedHyperbolic]{dgig}},
