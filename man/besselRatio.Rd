@@ -4,7 +4,8 @@
 
 \title{Ratio of Bessel K Functions}
 \description{
-  Calculates the ratio of Bessel K functions of different orders
+  Calculates the ratio of Bessel K functions of different orders, but
+  the same value of the argument.
 }
 \usage{
 besselRatio(x, nu, orderDiff, useExpScaled = 700)
@@ -39,7 +40,7 @@ besselRatio(x, nu, orderDiff, useExpScaled = 700)
   scaling since the scaling cancels across numerator and denominator.
 
   The Bessel function ratio is useful in calculating moments of the
-  Generalized Inverse Gaussian distribution, and hence also for the
+  generalized inverse Gaussian distribution, and hence also for the
   moments of the hyperbolic and generalized hyperbolic distributions.
 }
 

@@ -410,30 +410,19 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
-### Alpha = 0.9
-sampleSize <- c(20, 50, 100)
-prob <- rep(0, length(sampleSize))
-result = 0
-### Bootstrap numbers
-n <- 10
 
 ### Normal Distribution
+x <- rnorm(100, mean = 0, sd = 1)
+muhat <- mean(x)
+sigmahat <- sqrt(var(x)*(100 - 1)/100)
+result <- moranTest(x, "norm", mean = muhat, sd = sigmahat)
+result
 
-for (j in 1:length(sampleSize))
-{
-    for(i in 1:n)
-    {
-        data = rnorm(sampleSize[j], mean = 0, sd = 1)
-        muhat = mean(data)
-        sigmahat = sqrt(var(data) *
-                        (sampleSize[j] - 1) / sampleSize[j])
-        result = result + moranTest(data, "norm",
-        alpha = 0.9, mean = muhat, sd = sigmahat)
-    }
-    prob[j] = 1 - result / n
-    result = 0
-}
-prob
+### Exponential Distribution
+y <- rexp(200, rate = 3)
+lambdahat <- 1/mean(y)
+result <- moranTest(y, "exp", rate = lambdahat)
+result
 
 
 
@@ -553,7 +542,7 @@ require(VarianceGamma)
 param <- c(0,0.5,0,0.5)
 x <- rvg(100, param = param)
 tailPlot(x)
-tailPlotLine(x, distrFn = "vg", param = param) 
+tailPlotLine(x, distrFn = "vg", param = param)
 
 
 
@@ -567,7 +556,7 @@ flush(stderr()); flush(stdout())
 ### Name: tsHessian
 ### Title: Calculate Two-Sided Hessian Approximation
 ### Aliases: tsHessian
-### Keywords: ~kwd1 ~kwd2
+### Keywords: math
 
 ### ** Examples
 

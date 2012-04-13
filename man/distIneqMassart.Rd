@@ -4,7 +4,7 @@
 Massart Inequality for Distributions
 }
 \description{
-The function implements a test of the random number generator and
+This function implements a test of the random number generator and
 distribution function based on an inequality due to Massart (1990).
 }
 \usage{
@@ -23,7 +23,7 @@ distIneqMassart(densFn = "norm", n = 10000, probBound = 0.001, ...)
   Massart (1990) gave a version of the Dvoretsky-Kiefer-Wolfowitz
   inequality with the best possible constant:
 
-  \deqn{P(\left(\sup_{x}|\hat F_n(x)-F(x)|> t\right) \leq%
+  \deqn{P\left(\sup_{x}|\hat F_n(x)-F(x)|> t\right) \leq%
     2\exp(-2nt^2)}{%
     P(sup_x|F_n(x)-F(x)|> t) <= 2exp(-2nt^2)}
 
@@ -49,13 +49,13 @@ distIneqMassart(densFn = "norm", n = 10000, probBound = 0.001, ...)
     exceeds \code{t}.}
   \item{check}{Logical. Indicates whether the inequality is satisfied
     or not.}
-} 
+}
 \references{
 Massart P. (1990) The tight constant in the Dvoretsky-Kiefer-Wolfovitz
 inequality. \emph{Ann. Probab.}, \bold{18}, 1269--1283.
 }
 \author{
-  David Scott \email{d.scott@auckland.ac.nz}, 
+  David Scott \email{d.scott@auckland.ac.nz},
   Christine Yang Dong \email{c.dong@auckland.ac.nz}
 }
 
