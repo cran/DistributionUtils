@@ -1,8 +1,8 @@
 momIntegrated <- function(densFn = "ghyp", param = NULL,
                           order,  about = 0, absolute = FALSE, ...) {
 
-  if (missing(densFn) | !(is.function(densFn) | is.character(densFn)))
-    stop("'densFn' must be supplied as a function or name")
+  if (!(is.character(densFn)))
+    stop("'densFn' must be supplied as the root for that density")
 
   ## Set default integration limits
   low <- -Inf
@@ -13,10 +13,10 @@ momIntegrated <- function(densFn = "ghyp", param = NULL,
     if (is.null(densFn))
       stop("unsupported distribution")
     if (densFn == "ghyp" | densFn == "hyperb" |
-        densFn == "gig" | densFn == "vg")
-    {
-      if (!exists(paste("d", densFn, sep = ""), mode = "function"))
+        densFn == "gig" | densFn == "vg"){
+      if (!exists(paste("d", densFn, sep = ""), mode = "function")){
         stop("Relevant package must be loaded")
+      }
     }
 
 
@@ -57,7 +57,7 @@ momIntegrated <- function(densFn = "ghyp", param = NULL,
             (x - about)^order*dfun(x, ...)
           }
         } else {
-          ddist <- function(x, order, about, param) {
+          ddistParam <- function(x, order, about, param) {
             (x - about)^order*dfun(x, param = param)
           }
         }
@@ -67,7 +67,7 @@ momIntegrated <- function(densFn = "ghyp", param = NULL,
             abs(x - about)^order*dfun(x, ...)
           }
         } else {
-          ddist <- function(x, order, about, param) {
+          ddistParam <- function(x, order, about, param) {
             abs(x - about)^order*dfun(x, param = param)
           }
         }
@@ -80,7 +80,7 @@ momIntegrated <- function(densFn = "ghyp", param = NULL,
                      subdivisions = 1000,
                      rel.tol = .Machine$double.eps^0.5, ...)[[1]]
   } else {
-    mom <- integrate(ddist, low, high, param = param,
+    mom <- integrate(ddistParam, low, high, param = param,
                      order = order, about = about,
                      subdivisions = 1000,
                      rel.tol = .Machine$double.eps^0.5)[[1]]

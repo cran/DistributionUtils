@@ -1,7 +1,13 @@
+importFrom("graphics", "hist.default", "lines", "plot", "points",
+           "segments")
+importFrom("stats", "integrate", "median", "optimize", "pchisq",
+           "pgamma", "pnorm", "ppoints", "pt", "quantile", "sd",
+           "splinefun", "uniroot", "var")
+
 ################################################
 ### Functions
 ################################################
-export(newIBFR)
+#export(newIBFR)
 export(besselRatio)
 export(incompleteBesselK)
 export(incompleteBesselKR)
@@ -25,4 +31,4 @@ export(moranTest)
 ################################################
 ### useDynLib
 ################################################
-useDynLib("DistributionUtils")
+useDynLib("DistributionUtils", .registration = TRUE, .fixes = "C_")

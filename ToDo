@@ -16,4 +16,9 @@ Inversion tests need to be checked to make sure that they deal with
 distributions which are not on the whole real line, eg gig, but also
 gamma, uniform etc
 
+distStepSize needs argument for the sample size needed for the median
+estimation
+
+Need to improve incomplete Bessel K calculation, add C++ code from Toby
+
 

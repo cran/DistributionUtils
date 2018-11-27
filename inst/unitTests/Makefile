@@ -2,7 +2,6 @@ PKG=DistributionUtils
 TOP=../..
 SUITE=doRUnit.R
 R=R
-LEVEL=1
 
 all: inst test
 
@@ -18,5 +17,5 @@ test: # Run unit tests
 	${R} --vanilla --slave < ${SUITE}
 
 clean:
-	rm *~ *.Rout .RData .Rhistory ../*~ ../../*~ ../../R/*~ ../../man/*~ ../../data/*~
+	rm *~ *.Rout .RData .Rhistory ../*~ ../../*~ ../../R/*~ ../../man/*~ ../../data/*~ ../../tests/.Rhistory
 
