@@ -20,19 +20,21 @@ CCC                                                                  CCC
 CCC   David Scott, 30/08/2010                                        CCC
 CCC                                                                  CCC
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-      subroutine incompleteBesselK(x,y,nu,eps,nmax,KNu,IBF,result)
-C     implicit double precision(a-h,o-z)
-C     implicit integer (i-n)
+
+      subroutine incompleteBesselK(x,y,nu,eps, nmax, KNu, IBF, status)
+      implicit none
       integer nmax
-      integer result
+      integer status
       double precision x,y,nu,eps,KNu,IBF
-      parameter(numax=100)
+
+c      parameter(numax=100)
       double precision G(1:nmax)
       double precision GM(1:nmax),GN(0:nmax)
       double precision Am(0:nmax,0:nmax)
       double precision An(0:nmax,0:nmax)
-      double precision BI(0:numax),BK(0:numax)
+c      double precision BI(0:numax),BK(0:numax)
       double precision Cnp(0:(nmax+1)*(nmax+2)/2)
+      integer n
 
       call combinatorial(nmax, Cnp)
 
@@ -41,28 +43,28 @@ C     implicit integer (i-n)
       	call SSFcoef(nmax,-nu-1D0,An)
       	call GDENOM(0,x,y,nu,An,nmax,Cnp,GN)
       	call GDENOM(1,x,y,nu,An,nmax,Cnp,GN)
-      	call GNUM(1,x,y,nu,Am,An,nmax,Cnp,GM,GN)
+      	call GNUM(1,x,y,nu,Am,nmax,Cnp,GM,GN)
       	G(1) = x**nu*GM(1)/GN(1)
       	do n=2,nmax
            call GDENOM(n,x,y,nu,An,nmax,Cnp,GN)
-           call GNUM(n,x,y,nu,Am,An,nmax,Cnp,GM,GN)
+           call GNUM(n,x,y,nu,Am,nmax,Cnp,GM,GN)
            G(n) = x**nu*GM(n)/GN(n)
 c          write(*,*) G(n),n
            if(dabs(G(n)-G(n-1)).lt.eps) then
               goto 100
            end if
       	end do
-      else if(y.gt.x) then
+      else ! if(y.gt.x) then
 c      	call IKV(nu,2D0*dsqrt(x*y),pnu,BI,BK)
       	call SSFcoef(nmax,-nu-1D0,Am)
       	call SSFcoef(nmax,nu-1D0,An)
       	call GDENOM(0,y,x,-nu,An,nmax,Cnp,GN)
       	call GDENOM(1,y,x,-nu,An,nmax,Cnp,GN)
-      	call GNUM(1,y,x,-nu,Am,An,nmax,Cnp,GM,GN)
+      	call GNUM(1,y,x,-nu,Am,nmax,Cnp,GM,GN)
       	G(1) = y**(-nu)*GM(1)/GN(1)
       	do n=2,nmax
            call GDENOM(n,y,x,-nu,An,nmax,Cnp,GN)
-           call GNUM(n,y,x,-nu,Am,An,nmax,Cnp,GM,GN)
+           call GNUM(n,y,x,-nu,Am,nmax,Cnp,GM,GN)
            G(n) = y**(-nu)*GM(n)/GN(n)
 c          write(*,*) G(n),n
            if(dabs(G(n)-G(n-1)).lt.eps) then
@@ -74,7 +76,7 @@ c             write(*,*) 'BK',BK(int(nu))
       end if
 
 100   if(n.gt.nmax) then
-         result = 1
+         status = 1
       end if
 
       IBF = G(n)
@@ -83,10 +85,9 @@ c             write(*,*) 'BK',BK(int(nu))
 
 
       subroutine SSFcoef(nmax,nu,A)
-      implicit double precision(a-h,o-z)
-      implicit integer (i-n)
+      implicit none
       integer l,i,nmax
-      double precision nu,A(0:nmax,0:nmax)
+      double precision nu, A(0:nmax,0:nmax)
       A(0,0) = 1D0
       do l=1,nmax
          do i=1,l-1
@@ -99,10 +100,12 @@ c             write(*,*) 'BK',BK(int(nu))
       end
 
       subroutine combinatorial(nu, Cnp)
-      implicit double precision (a-h, o-z)
-      implicit integer (i-n)
-
+      implicit none
+      integer nu
+      double precision Cnp
       dimension Cnp(0:*)
+
+      integer n, np
 
       do n=0, nu
          Cnp(n*(n+1)/2 + 0) = 1.0d0
@@ -114,14 +117,17 @@ c             write(*,*) 'BK',BK(int(nu))
       return
       end
 
-      subroutine GNUM(n,x,y,nu,Am,An,nmax,Cnp,GM,GN)
-      implicit double precision(a-h,o-z)
-      implicit integer (i-n)
+      subroutine GNUM(n,x,y,nu,Am, nmax,Cnp,GM,GN)
+      implicit none
+
       integer n,nmax
       double precision x,y,nu
       double precision Am(0:nmax,0:nmax)
-      double precision An(0:nmax,0:nmax)
-      double precision Cnp(0:*),GM(1:nmax),GN(0:nmax)
+      double precision Cnp(0:*), GM(1:nmax), GN(0:nmax)
+
+      integer ir, is, i
+      double precision terme, termepr
+
       GM(n) = 0D0
       do ir=1,n
          terme=0D0
@@ -140,12 +146,16 @@ c             write(*,*) 'BK',BK(int(nu))
       end
 
       subroutine GDENOM(n,x,y,nu,An,nmax,Cnp,GN)
-      implicit double precision(a-h,o-z)
-      implicit integer (i-n)
+      implicit none
+
       integer n,nmax
       double precision x,y,nu
       double precision An(0:nmax,0:nmax)
-      double precision Cnp(0:*),GN(0:nmax)
+      double precision Cnp(0:*), GN(0:nmax)
+
+      double precision terme
+      integer ir, i
+
       GN(n) = 0D0
       do ir=0,n
          terme=0D0
