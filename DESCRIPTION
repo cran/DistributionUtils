@@ -1,8 +1,11 @@
 Package: DistributionUtils
-Version: 0.6-1
-Date: 2023-08-22
+Version: 0.6-2
+Date: 2025-03-29
 Title: Distribution Utilities
-Author: David Scott <d.scott@auckland.ac.nz>
+Authors@R: person(given = "David",
+                  family = "Scott",
+                  role = c("aut", "cre"),
+                  email = "d.scott@auckland.ac.nz")
 Maintainer: David Scott <d.scott@auckland.ac.nz>
 Depends: R (>= 3.0.1)
 Suggests: GeneralizedHyperbolic, VarianceGamma, SkewHyperbolic, RUnit
@@ -19,6 +22,7 @@ Description: Utilities are provided which are of use in the
     of the incomplete Bessel K function.
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2023-08-24 11:47:27 UTC; dsco036
+Packaged: 2025-03-29 00:24:59 UTC; dsco0
+Author: David Scott [aut, cre]
 Repository: CRAN
-Date/Publication: 2023-08-28 11:30:11 UTC
+Date/Publication: 2025-03-29 01:10:02 UTC
